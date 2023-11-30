@@ -85,13 +85,25 @@ const MQTTClient: React.FC = () => {
         </div>
       )}
 
-      <input
-        className="w-full rounded-md border-2 border-pink-500 p-2"
-        type="text"
-        placeholder="Enter message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
+      <div className="flex w-full flex-row">
+        <input
+          className="flex-grow rounded-md border-2 border-pink-500 p-2"
+          type="text"
+          placeholder="Enter message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        {/* on clicked, generate a random 4 letter string and call setMessage */}
+        <button
+          className="rounded-md border-2 border-gray-500 p-2"
+          onClick={() => {
+            const randomString = Math.random().toString(36).substring(7);
+            setMessage(randomString);
+          }}
+        >
+          Generate Random
+        </button>
+      </div>
 
       <button
         className="rounded-md border-2 border-gray-500 p-2"
