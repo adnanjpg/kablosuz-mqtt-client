@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import mqtt, { type MqttClient } from "mqtt";
+import { useRouter } from "next/router";
 
 const MQTTClient: React.FC = () => {
+  const router = useRouter();
+  const { topicId } = router.query as { topicId: string };
+
   const [messages, setMessages] = useState<string[]>([]);
   const [connectionStatus, setConnectionStatus] =
     useState<string>("Disconnected");
@@ -20,9 +24,9 @@ const MQTTClient: React.FC = () => {
       cli.on("connect", () => {
         console.log("Connected to MQTT broker");
         setConnectionStatus("Connected");
-        const topic = "your-own-topic"; // Replace with your desired topic/channel
-        cli.subscribe(topic);
-        setChannelInfo(`Subscribed to ${topic}`);
+
+        cli.subscribe(topicId);
+        setChannelInfo(`Subscribed to ${topicId}`);
         setError(""); // Reset error on successful connection
       });
 
@@ -86,7 +90,7 @@ const MQTTClient: React.FC = () => {
 
       <button
         className="rounded-md border-2 border-gray-500 p-2"
-        onClick={() => sendMessage("your-own-topic", "Your message here")}
+        onClick={() => sendMessage(topicId, "Your message here")}
       >
         Send Message
       </button>
