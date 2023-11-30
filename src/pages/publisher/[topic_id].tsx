@@ -32,7 +32,7 @@ const MQTTClient: React.FC = () => {
         setConnectionStatus("Connected");
 
         cli.subscribe(topicId);
-        setChannelInfo(`Subscribed to ${topicId}`);
+        setChannelInfo(`${topicId}`);
         setError(""); // Reset error on successful connection
       });
 
@@ -66,10 +66,10 @@ const MQTTClient: React.FC = () => {
     <div>
       <h1>MQTT Client publisher</h1>
       <p className="rounded-md border-2 border-gray-500 p-2">
-        Connection Status: {connectionStatus}
+        Connection Status: <span className="font-bold">{connectionStatus}</span>
       </p>
       <p className="rounded-md border-2 border-gray-500 p-2">
-        Channel Info: {channelInfo}
+        Channel Info: <span className="font-bold">{channelInfo}</span>
       </p>
 
       {error && (
