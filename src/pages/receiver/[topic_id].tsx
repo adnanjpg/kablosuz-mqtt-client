@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 
 const MQTTClient: React.FC = () => {
   const router = useRouter();
-  const { topicId } = router.query as { topicId: string };
+  const { topic_id } = router.query as { topic_id: string };
+  const topicId = topic_id;
+
+  if (!topicId) {
+    return <p>Topic ID not found</p>;
+  }
 
   const [messages, setMessages] = useState<string[]>([]);
   const [connectionStatus, setConnectionStatus] =
