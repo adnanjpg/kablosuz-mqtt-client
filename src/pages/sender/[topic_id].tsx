@@ -11,13 +11,14 @@ const MQTTClient: React.FC = () => {
     return <p>Topic ID not found</p>;
   }
 
-  const [messages, setMessages] = useState<string[]>([]);
   const [connectionStatus, setConnectionStatus] =
     useState<string>("Disconnected");
   const [channelInfo, setChannelInfo] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const [client, setClient] = useState<MqttClient | null>(null);
+
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     const connectToBroker = () => {
@@ -35,12 +36,6 @@ const MQTTClient: React.FC = () => {
         setError(""); // Reset error on successful connection
       });
 
-      cli.on("message", (topic, message) => {
-        const incomingMessage = `Received message on topic ${topic}: ${message.toString()}`;
-        console.log(incomingMessage);
-        setMessages((prevMessages) => [...prevMessages, incomingMessage]);
-      });
-
       cli.on("error", (err) => {
         setError(`MQTT client error: ${err.message}`);
       });
@@ -54,35 +49,50 @@ const MQTTClient: React.FC = () => {
       client?.end();
       setConnectionStatus("Disconnected");
       setChannelInfo("");
-      setMessages([]);
       setError("");
     };
   }, []);
 
+  const sendMessage = (topic: string, payload: string) => {
+    if (client && client.connected) {
+      client.publish(topic, payload);
+    } else {
+      setError("MQTT client is not connected.");
+      console.error("MQTT client is not connected.");
+    }
+  };
+
   return (
     <div>
-      <h1>MQTT Client subscriber</h1>
+      <h1>MQTT Client publisher</h1>
       <p className="rounded-md border-2 border-gray-500 p-2">
         Connection Status: {connectionStatus}
       </p>
       <p className="rounded-md border-2 border-gray-500 p-2">
         Channel Info: {channelInfo}
       </p>
-      {/* box using tailwind */}
-      <div className="rounded-md border-2 border-gray-500 p-2">
-        <h2>Incoming Messages</h2>
-        <ul>
-          {messages.length > 0
-            ? messages.map((message, index) => <li key={index}>{message}</li>)
-            : "No messages yet"}
-        </ul>
-      </div>
+
       {error && (
         <div>
           <h2>Error</h2>
           <p>{error}</p>
         </div>
       )}
+
+      <input
+        className="border-purble-500 rounded-md border-2 p-2"
+        type="text"
+        placeholder="Enter message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+
+      <button
+        className="rounded-md border-2 border-gray-500 p-2"
+        onClick={() => sendMessage(topicId, message)}
+      >
+        Send Message
+      </button>
     </div>
   );
 };

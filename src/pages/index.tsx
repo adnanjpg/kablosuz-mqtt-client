@@ -21,7 +21,7 @@ export default function Home() {
           }
         }}
       >
-        Go to Receiver
+        Go to Publisher
       </button>
       <button
         disabled={!topicId}
@@ -32,7 +32,7 @@ export default function Home() {
           }
         }}
       >
-        Go to Sender
+        Go to Subscriber
       </button>
     </>
   );
