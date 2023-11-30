@@ -21,6 +21,10 @@ const MQTTClient: React.FC = () => {
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
+    if (client) {
+      return;
+    }
+
     const connectToBroker = () => {
       const cli = mqtt.connect(process.env.NEXT_PUBLIC_MQTT_BROKER_URL!, {
         username: process.env.NEXT_PUBLIC_MQTT_USERNAME!,
@@ -40,13 +44,15 @@ const MQTTClient: React.FC = () => {
         setError(`MQTT client error: ${err.message}`);
       });
 
-      setClient(cli);
+      return cli;
     };
 
-    connectToBroker();
+    const cli = connectToBroker();
+
+    setClient(cli);
 
     return () => {
-      client?.end();
+      cli?.end();
       setConnectionStatus("Disconnected");
       setChannelInfo("");
       setError("");
