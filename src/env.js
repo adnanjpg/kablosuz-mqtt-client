@@ -1,3 +1,5 @@
+// get your creds from hivemq.cloud
+
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
@@ -16,7 +18,9 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_MQTT_BROKER_URL: z.string().url(),
+    NEXT_PUBLIC_MQTT_USERNAME: z.string(),
+    NEXT_PUBLIC_MQTT_PASSWORD: z.string(),
   },
 
   /**
@@ -25,7 +29,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    NEXT_PUBLIC_MQTT_BROKER_URL: process.env.NEXT_PUBLIC_MQTT_BROKER_URL,
+    NEXT_PUBLIC_MQTT_USERNAME: process.env.NEXT_PUBLIC_MQTT_USERNAME,
+    NEXT_PUBLIC_MQTT_PASSWORD: process.env.NEXT_PUBLIC_MQTT_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
