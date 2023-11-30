@@ -61,7 +61,9 @@ const MQTTClient: React.FC = () => {
 
   const sendMessage = (topic: string, payload: string) => {
     if (client && client.connected) {
-      client.publish(topic, payload);
+      client.publish(topic, payload, {
+        retain: true,
+      });
     } else {
       setError("MQTT client is not connected.");
       console.error("MQTT client is not connected.");
