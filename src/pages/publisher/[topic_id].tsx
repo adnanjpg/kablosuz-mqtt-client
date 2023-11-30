@@ -86,8 +86,6 @@ const MQTTClient: React.FC = () => {
       )}
 
       <input
-        // super pretty box using tailwind
-        // input white text on pink background
         className="w-full rounded-md border-2 border-pink-500 p-2"
         type="text"
         placeholder="Enter message"
