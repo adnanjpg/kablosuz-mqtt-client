@@ -68,6 +68,8 @@ const MQTTClient: React.FC = () => {
       setError("MQTT client is not connected.");
       console.error("MQTT client is not connected.");
     }
+
+    setMessage("");
   };
 
   return (
