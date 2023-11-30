@@ -17,7 +17,7 @@ export default function Home() {
         className="m-2 rounded-md border-2 border-pink-500 bg-pink-500 p-2 text-white disabled:opacity-50"
         onClick={() => {
           if (topicId) {
-            window.location.href = `/receiver/${topicId}`;
+            window.location.href = `/subscriber/${topicId}`;
           }
         }}
       >
@@ -28,7 +28,7 @@ export default function Home() {
         className="m-2 rounded-md border-2 border-blue-500 bg-blue-500 p-2 text-white disabled:opacity-50"
         onClick={() => {
           if (topicId) {
-            window.location.href = `/sender/${topicId}`;
+            window.location.href = `/publisher/${topicId}`;
           }
         }}
       >
