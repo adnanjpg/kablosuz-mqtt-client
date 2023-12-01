@@ -17,6 +17,15 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  async redirects() {
+    return [
+      {
+        source: '/sunum',
+        destination: 'https://docs.google.com/presentation/d/1d0OuFMDVLGNuIk-j_7KbjkL30AnrN8dmfL8AjjPhgBw/edit?usp=sharing',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default config;
